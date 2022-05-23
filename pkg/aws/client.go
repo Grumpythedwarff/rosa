@@ -650,9 +650,9 @@ func (c *awsClient) GetRoleByARN(roleARN string) (*iam.Role, error) {
 		return nil, fmt.Errorf("expected ARN '%s' to be IAM role resource", roleARN)
 	}
 
-	// get resource name
+	// get resource name, allowing for names that contain paths
 	resourceSplit := strings.Split(resource, "/")
-	roleName := resourceSplit[1]
+	roleName := resourceSplit[1:]
 
 	roleOutput, err := c.iamClient.GetRole(&iam.GetRoleInput{
 		RoleName: aws.String(roleName),
