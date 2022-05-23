@@ -652,7 +652,7 @@ func (c *awsClient) GetRoleByARN(roleARN string) (*iam.Role, error) {
 
 	// get resource name, allowing for names that contain paths
 	resourceSplit := strings.Split(resource, "/")
-	roleName := strings.Join(resourceSplit[1:], "/")
+	roleName := resourceSplit[len(resourceSplit)-1]
 
 	roleOutput, err := c.iamClient.GetRole(&iam.GetRoleInput{
 		RoleName: aws.String(roleName),
